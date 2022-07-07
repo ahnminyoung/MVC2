@@ -53,24 +53,85 @@ public class BasicController {
     }
 
     @GetMapping("/basic-objects")
-    public String basicObjects(HttpSession session){
+    public String basicObjects(HttpSession session) {
         session.setAttribute("sessionData", "Hello Session");
 
         return "basic/basic-objects";
     }
 
     @Component("helloBean")
-    static class HelloBean{
+    static class HelloBean {
         public String hello(String data) {
             return "Hello " + data;
         }
     }
 
     @GetMapping("/date")
-    public String date(Model model){
+    public String date(Model model) {
         model.addAttribute("localDateTime", LocalDateTime.now());
 
         return "basic/date";
+    }
+
+    @GetMapping("/link")
+    public String link(Model model) {
+        model.addAttribute("param1", "data1");
+        model.addAttribute("param2", "data2");
+
+        return "basic/link";
+    }
+
+    @GetMapping("/literal")
+    public String literal(Model model) {
+        model.addAttribute("data", "Spring!");
+        return "basic/literal";
+    }
+
+    @GetMapping("/operation")
+    public String operation(Model model) {
+        model.addAttribute("nullData", null);
+        model.addAttribute("data", "Spring");
+
+        return "basic/operation";
+    }
+
+    @GetMapping("/attribute")
+    public String attribute(){
+        return "basic/attribute";
+    }
+
+    @GetMapping("/each")
+    public String each(Model model) {
+        addUsers(model);
+        return "basic/each";
+    }
+
+    @GetMapping("/condition")
+    public String condition(Model model) {
+        addUsers(model);
+        return "basic/condition";
+    }
+
+    @GetMapping("/comments")
+    public String comments(Model model) {
+        model.addAttribute("data", "Spring!");
+        return "basic/comments";
+    }
+
+    @GetMapping("/block")
+    public String block(Model model){
+        addUsers(model);
+        return "basic/block";
+    }
+
+    private void addUsers(Model model) {
+
+        List<User> list = new ArrayList<>();
+        list.add(new User("UserA", 10));
+        list.add(new User("UserB", 20));
+        list.add(new User("UserC", 30));
+
+        model.addAttribute("users", list);
     }
 
     @Data
